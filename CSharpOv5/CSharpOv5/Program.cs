@@ -49,7 +49,7 @@ namespace CSharpOv5
 
             Console.Write(st.SolgtFor() + "\n" + st.AntallSolgtePlasser);
 
-            
+            //Canucr
 
             Console.Read();
             
