@@ -16,6 +16,7 @@ namespace CSharpOv5
             //tribuner[1] = new Sittetribune("Felt B", 250, 200, 20);
             //tribuner[2] = new VIPtribune("Kafe Fotball", 1000, 10, 2);
             
+            //22
             //double solgtFor = 0;
             //string res = "";
             //for (int i = 0; i < tribuner.Length; i++)
