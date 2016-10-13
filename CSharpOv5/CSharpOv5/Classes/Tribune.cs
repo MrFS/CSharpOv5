@@ -108,7 +108,7 @@ namespace CSharpOv5
         {
             List<string> res = new List<string>();
 
-            res.Add("Voksenbilletter\nRad\tPlass\tPris");
+            res.Add("Voksenbilletter\nBillettnummer\tPris");
 
             for (int i = 0; i < antVoksne; i++)
             {
@@ -116,7 +116,7 @@ namespace CSharpOv5
 
                 if (getTup.Item1)
                 {
-                    res.Add(getTup.Item2 + "\t" + getTup.Item3 + "\t" + Pris);
+                    res.Add(AntallSolgtePlasser + "\t" + "\t" + Pris);
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace CSharpOv5
                 }
             }
 
-            res.Add("\nBarnebilletter\nRad\tPlass\tPris");
+            res.Add("\nBarnebilletter\nBillettnummer\tPris");
 
             for (int i = 0; i < antBarn; i++)
             {
@@ -134,7 +134,7 @@ namespace CSharpOv5
                 if (getTup.Item1)
                 {
                     
-                    res.Add(getTup.Item2 + "\t" + getTup.Item3 + "\t" + BarnePris());
+                    res.Add(AntallSolgtePlasser + "\t" + "\t" + BarnePris());
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace CSharpOv5
         }
 
 
-        public override Object Clone()
+        public override object Clone()
         {
             Sittetribune t = new Sittetribune(Navn, Kapasitet, (int)Pris, AntallRader);
             for (int i = 0; i < AntallRader; i++)
@@ -294,6 +294,11 @@ namespace CSharpOv5
         {
             int antPrRad = Kapasitet / AntallRader;
             tilskuer = new string[AntallRader, antPrRad];
+        }
+
+        public override double BarnePris()
+        {
+            return Pris;    
         }
     }
 }

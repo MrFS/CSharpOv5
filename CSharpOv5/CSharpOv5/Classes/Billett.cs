@@ -27,7 +27,7 @@ namespace CSharpOv4.Classes.Oving
             set;
         }
 
-        public override int AntallSolgtePlasser
+        public int AntallSolgtePlasser
         {
             get
             {
@@ -35,10 +35,10 @@ namespace CSharpOv4.Classes.Oving
             }
         }
 
-        public override List<string> KjøpBillett(int antVoksne, int antBarn)
-        {
+        //public override List<string> KjøpBillett(int antVoksne, int antBarn)
+        //{
 
-        }
+        //}
 
         public override string ToString()
         {

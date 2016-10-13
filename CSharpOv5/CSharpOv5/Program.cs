@@ -42,6 +42,8 @@ namespace CSharpOv5
 
             Sittetribune st = new Sittetribune("Felt A", 250, 200, 10);
 
+            Console.WriteLine("Sittebilletter\n");
+
             List<string> res = st.KjøpBillett(4, 2);
 
             foreach (var item in res)
@@ -49,7 +51,37 @@ namespace CSharpOv5
                 Console.WriteLine(item);
             }
 
-            Console.Write(st.SolgtFor() + "\n" + st.AntallSolgtePlasser);
+            Console.Write(st.SolgtFor() + "\n" + st.AntallSolgtePlasser + "\n\n");
+
+            res.Clear();
+
+            Ståtribune stt = new Ståtribune("Felt B", 100, 1000);
+
+            Console.WriteLine("Ståbilletter\n");
+
+            res = stt.KjøpBillett(5, 25);
+
+            foreach (var item in res)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.Write(stt.SolgtFor() + "\n" + stt.AntallSolgtePlasser + "\n\n");
+
+            Console.WriteLine("VIPbilletter\n");
+
+            VIPtribune vp = new VIPtribune("Felt C", 500, 100, 5);
+
+            res.Clear();
+
+            res = vp.KjøpBillett(2, 4);
+
+            foreach (var item in res)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.Write(vp.SolgtFor() + "\n" + vp.AntallSolgtePlasser + "\n\n");
 
             //Canucr
 
