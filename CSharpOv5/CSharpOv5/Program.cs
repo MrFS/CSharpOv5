@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpOv5.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,7 +54,23 @@ namespace CSharpOv5
             //Canucr
 
             Console.Read();
-            
+
+            //Testobjekt[] test = new Testobjekt[10];
+            //Random r = new Random();
+            //string hello = "";
+            //for (int i = 0; i < test.Length; i++)
+            //{
+            //    test[i] = new Testobjekt(r.Next(100));
+
+            //}
+            //foreach (Testobjekt t in test) hello += t.Verdi + " ";
+            //hello += "\n";
+            //Array.Sort(test);
+            //foreach (Testobjekt t in test) hello += t.Verdi + " ";
+            //hello += "\n";
+            //MessageBox.Show(hello, "Test", MessageBoxButtons.OK,
+            //MessageBoxIcon.Information);
+
         }
     }
 }

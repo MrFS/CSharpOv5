@@ -8,9 +8,10 @@ namespace CSharpOv4.Classes.Oving
 {
     public class Ståbillett : Billett
     {
-        public Ståbillett(string tribunenavn, double pris, int plassnr) : base(tribunenavn, pris)
+        public Ståbillett(string tribunenavn, double pris) : base(tribunenavn, pris)
         {
-
+            Tribunenavn = tribunenavn;
+            Pris = pris;
         }
 
         string Tribunenavn
@@ -25,10 +26,10 @@ namespace CSharpOv4.Classes.Oving
             set;
         }
 
-        int PlassNr
-        {
-            get;
-            set;
-        }
+        //int PlassNr
+        //{
+        //    get;
+        //    set;
+        //}
     }
 }

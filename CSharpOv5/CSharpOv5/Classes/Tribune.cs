@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CSharpOv5
 {
-    public abstract class Tribune
+    public abstract class Tribune : ICloneable
     {
         public Tribune(string navn, double pris, int kap)
         {
@@ -40,6 +40,7 @@ namespace CSharpOv5
             set;
         }
 
+        public abstract object Clone();
         public double SolgtFor()
         {
             double barn = Barn * BarnePris();
@@ -70,7 +71,6 @@ namespace CSharpOv5
         }
     }
 
-
     public class Ståtribune : Tribune
     {
         private int antallSolgtePlasser;
@@ -95,6 +95,13 @@ namespace CSharpOv5
                 return Tuple.Create(true, 0, 0);
             }
             else return Tuple.Create(false, 0, 0);
+        }
+
+        public override object Clone()
+        {
+            Ståtribune t = new Ståtribune(Navn, Kapasitet, (int)Pris);
+            t.antallSolgtePlasser = antallSolgtePlasser;
+            return t;
         }
 
         public override List<string> KjøpBillett(int antVoksne, int antBarn)
@@ -196,6 +203,18 @@ namespace CSharpOv5
                 return total;
             }
         }
+
+
+        public override Object Clone()
+        {
+            Sittetribune t = new Sittetribune(Navn, Kapasitet, (int)Pris, AntallRader);
+            for (int i = 0; i < AntallRader; i++)
+            {
+                t.antallSolgtPrRad[i] = antallSolgtPrRad[i];
+            }
+            return t;
+        }
+
 
         public override Tuple<bool, int, int> SelgPlasser(int antall)
         {
