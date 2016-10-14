@@ -12,97 +12,134 @@ namespace CSharpOv5
     {
         static void Main(string[] args)
         {
-            //Tribune[] tribuner = new Tribune[3];
-            //tribuner[0] = new Ståtribune("Felt A", 50, 1000);
-            //tribuner[1] = new Sittetribune("Felt B", 250, 200, 20);
-            //tribuner[2] = new VIPtribune("Kafe Fotball", 1000, 10, 2);
-            
-            //22
-            //double solgtFor = 0;
-            //string res = "";
-            //for (int i = 0; i < tribuner.Length; i++)
-            //{
-            //    res += "Kapasitet på " + tribuner[i].Navn
-            //    + ": " + tribuner[i].Kapasitet + "\n";
-            //    if (tribuner[i].SelgPlasser(20))
-            //        res += "20 plasser solgt\n";
-            //    else res += "Ikke nok plass\n";
-            //    if (tribuner[i].SelgPlasser(10))
-            //        res += "10 plasser solgt\n";
-            //    else res += "Ikke nok plass\n";
-            //    if (tribuner[i].SelgPlasser(5))
-            //        res += "5 plasser solgt\n";
-            //    else res += "Ikke nok plass\n";
-            //    solgtFor += tribuner[i].SolgtFor();
-            //}
-            //res += "Solgt for: " + solgtFor + " kroner\n";
-            //MessageBox.Show(res, "Tribuner", MessageBoxButtons.OK,
-            //MessageBoxIcon.Information);
-
-
             Sittetribune st = new Sittetribune("Felt A", 250, 200, 10);
-
-            Console.WriteLine("Sittebilletter\n");
-
-            List<string> res = st.KjøpBillett(4, 2);
-
-            foreach (var item in res)
-            {
-                Console.WriteLine(item);
-            }
-
-            Console.Write(st.SolgtFor() + "\n" + st.AntallSolgtePlasser + "\n\n");
-
-            res.Clear();
-
             Ståtribune stt = new Ståtribune("Felt B", 100, 1000);
-
-            Console.WriteLine("Ståbilletter\n");
-
-            res = stt.KjøpBillett(5, 25);
-
-            foreach (var item in res)
-            {
-                Console.WriteLine(item);
-            }
-
-            Console.Write(stt.SolgtFor() + "\n" + stt.AntallSolgtePlasser + "\n\n");
-
-            Console.WriteLine("VIPbilletter\n");
-
             VIPtribune vp = new VIPtribune("Felt C", 500, 100, 5);
 
-            res.Clear();
+            Tribune[] tribuner = new Tribune[3] { st, stt, vp };
 
-            res = vp.KjøpBillett(2, 4);
+            Console.WriteLine("Velkommen til et tilbakestående billettsystem\nVelg hvilken billettype du vil ha:");
 
-            foreach (var item in res)
+            do
             {
-                Console.WriteLine(item);
-            }
+                
+                Console.WriteLine("Trykk A for sittebilletter; B for ståbilletter; C for VIPbilletter");
 
-            Console.Write(vp.SolgtFor() + "\n" + vp.AntallSolgtePlasser + "\n\n");
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.A:
 
-            //Canucr
+                        int x, y;
+                        Console.WriteLine("\nSittebilletter bestilling\nHvor mange voksne: "); x = Convert.ToInt32(Console.ReadLine());
 
+                        Console.WriteLine("Hvor mange barn: "); y = Convert.ToInt32(Console.ReadLine());
+
+                        string[] antVoksne = new string[x];
+                        string[] antBarn = new string[y];
+
+                        Console.WriteLine("Sittebilletter\n");
+
+                        List<string> ress = st.KjopBillett(antVoksne, antBarn);
+
+                        foreach (var item in ress)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        Console.Write(st.SolgtFor() + "\n" + st.AntallSolgtePlasser + "\n\n");
+
+                        ress.Clear();
+
+                        break;
+                    case ConsoleKey.B:
+
+                        Console.WriteLine("\nStåbilletter bestilling\nHvor mange voksne: "); x = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine("Hvor mange barn: "); y = Convert.ToInt32(Console.ReadLine());
+
+                        string[] antVoksneStabillett = new string[x];
+                        string[] antBarnStabillett = new string[y];
+
+                        Console.WriteLine("Sittebilletter\n");
+
+                        ress = stt.KjopBillett(antVoksneStabillett, antBarnStabillett);
+
+                        foreach (var item in ress)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        Console.Write("Hittil er det solgt for " + stt.SolgtFor() + ",-\nAntall solgte plasser: " + stt.AntallSolgtePlasser + "\n\n");
+
+                        ress.Clear();
+
+                        break;
+                    case ConsoleKey.C:
+
+                        int ant = 0;
+                        
+                        Console.WriteLine("\nVIPbilletter bestilling\nSkriv hvor mange voksne: "); ant = Convert.ToInt32(Console.ReadLine());
+
+                        string[] voksne = new string[ant];
+
+                        Console.WriteLine("Skriv navn på de voksne: ");
+
+                        for (int i = 0; i < voksne.Length; i++)
+                        {
+                            voksne[i] = Console.ReadLine();
+                        }
+                        
+                        Console.WriteLine("Skriv hvor mange barn: "); ant = Convert.ToInt32(Console.ReadLine());
+
+                        string[] barn = new string[ant];
+
+                        Console.WriteLine("Skriv navn på barn: ");
+
+                        for (int i = 0; i < barn.Length; i++)
+                        {
+                            barn[i] = Console.ReadLine();
+                        }
+
+                        ress = vp.KjopBillett(voksne, barn);
+
+                        foreach (var item in ress)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        Console.Write(vp.SolgtFor() + "\n" + vp.AntallSolgtePlasser + "\n\n");
+
+                        break;
+                    default:
+                        break;
+                }
+
+                Console.WriteLine("\nSortering av tribuner etter navn\n");
+
+                Tribune[] s = new Tribune[3] { vp, stt, st };
+
+                Sortering.SorterNavn(s);
+
+                foreach (var item in s)
+                {
+                    Console.Write(item.Navn + "\n");
+                }
+
+                Console.WriteLine("\nSortering etter hvor mye solgt for");
+
+                Sortering.SorterSolgtFor(s);
+
+                foreach (var item in s)
+                {
+                    Console.WriteLine(item.Navn + " har solgt for: " + item.SolgtFor());
+                }
+
+            } while (Console.ReadKey().Key != ConsoleKey.Escape);
+            
             Console.Read();
-
-            //Testobjekt[] test = new Testobjekt[10];
-            //Random r = new Random();
-            //string hello = "";
-            //for (int i = 0; i < test.Length; i++)
-            //{
-            //    test[i] = new Testobjekt(r.Next(100));
-
-            //}
-            //foreach (Testobjekt t in test) hello += t.Verdi + " ";
-            //hello += "\n";
-            //Array.Sort(test);
-            //foreach (Testobjekt t in test) hello += t.Verdi + " ";
-            //hello += "\n";
-            //MessageBox.Show(hello, "Test", MessageBoxButtons.OK,
-            //MessageBoxIcon.Information);
-
+            
         }
+        
     }
+    
 }

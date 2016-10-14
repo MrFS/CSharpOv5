@@ -40,7 +40,8 @@ namespace CSharpOv5
             set;
         }
 
-        public abstract object Clone();
+        public abstract object Clone();
+
         public double SolgtFor()
         {
             double barn = Barn * BarnePris();
@@ -53,7 +54,16 @@ namespace CSharpOv5
             get;
         }
 
-        public abstract List<string> KjøpBillett(int antVoksne, int antBarn);
+        //public abstract List<string> KjøpBillett(int antVoksne, int antBarn);
+
+        /// <summary>
+        /// Ny kjøp billett med strengtabbeller som argumenter
+        /// Kun gyldig for VIPbilletter, restrerende vil returnere samme resultat som gamle.
+        /// </summary>
+        /// <param name="navnVoksne">Navn på voksne</param>
+        /// <param name="navnBarn">Navn på barn</param>
+        /// <returns>null</returns>
+        public virtual List<string> KjopBillett(string[] navnVoksne, string[] navnBarn) { return null; }
 
         public virtual double BarnePris()
         {
@@ -104,13 +114,13 @@ namespace CSharpOv5
             return t;
         }
 
-        public override List<string> KjøpBillett(int antVoksne, int antBarn)
+        public override List<string> KjopBillett(string[] antVoksne, string[] antBarn)
         {
             List<string> res = new List<string>();
 
             res.Add("Voksenbilletter\nBillettnummer\tPris");
 
-            for (int i = 0; i < antVoksne; i++)
+            for (int i = 0; i < antVoksne.Length; i++)
             {
                 Tuple<bool, int, int> getTup = SelgPlasser(1);
 
@@ -127,13 +137,13 @@ namespace CSharpOv5
 
             res.Add("\nBarnebilletter\nBillettnummer\tPris");
 
-            for (int i = 0; i < antBarn; i++)
+            for (int i = 0; i < antBarn.Length; i++)
             {
                 Tuple<bool, int, int> getTup = SelgPlasser(1);
 
                 if (getTup.Item1)
                 {
-                    
+                    Barn++;
                     res.Add(AntallSolgtePlasser + "\t" + "\t" + BarnePris());
                 }
                 else
@@ -213,7 +223,8 @@ namespace CSharpOv5
                 t.antallSolgtPrRad[i] = antallSolgtPrRad[i];
             }
             return t;
-        }
+        }
+
 
 
         public override Tuple<bool, int, int> SelgPlasser(int antall)
@@ -232,14 +243,14 @@ namespace CSharpOv5
             else { Tuple<bool, int, int> tup = new Tuple<bool, int, int>(false, 0, 0); return tup; };
         }
 
-        public override List<string> KjøpBillett(int antVoksne, int antBarn)
+        public override List<string> KjopBillett(string[] antVoksne, string[] antBarn)
         {
 
             List<string> res = new List<string>();
 
             res.Add("Voksenbilletter\nRad\tPlass\tPris");
 
-            for (int i = 0; i < antVoksne; i++)
+            for (int i = 0; i < antVoksne.Length; i++)
             {
                 Tuple<bool, int, int> getTup = SelgPlasser(1);
 
@@ -257,7 +268,7 @@ namespace CSharpOv5
 
             res.Add("\nBarnebilletter\nRad\tPlass\tPris");
 
-            for (int i = 0; i < antBarn; i++)
+            for (int i = 0; i < antBarn.Length; i++)
             {
                 Tuple<bool, int, int> getTup = SelgPlasser(1);
 
@@ -287,13 +298,64 @@ namespace CSharpOv5
 
     public class VIPtribune : Sittetribune
     {
-        private string[,] tilskuer;
+        public string[,] tilskuer;
 
         public VIPtribune(string navn, double pris, int kap, int antRader)
             : base(navn, pris, kap, antRader)
         {
             int antPrRad = Kapasitet / AntallRader;
             tilskuer = new string[AntallRader, antPrRad];
+        }
+
+        public override List<string> KjopBillett(string[] navnVoksne, string[] navnBarn)
+        {
+            List<string> res = new List<string>();
+
+            int voksneBound = navnVoksne.GetUpperBound(0) + 1, barnBound = navnBarn.GetUpperBound(0);
+
+            res.Add("\n\nVoksenbilletter\nNavn\t\tRad\tPlass\tPris");
+
+            for (int i = 0; i < navnVoksne.Length; i++)
+            {
+                Tuple<bool, int, int> getTup = SelgPlasser(1);
+
+                if (getTup.Item1)
+                {
+
+                    tilskuer[i, 0] = navnVoksne[i];
+
+                    Plass++;
+                    res.Add(navnVoksne[i] + "\t" + getTup.Item2 + "\t" + getTup.Item3 + "\t" + Pris);
+                }
+                else
+                {
+                    res.Add("Ingen voksenbilletter tilgjengelig for " + navnVoksne[i]);
+                    break;
+                }
+            }
+
+            res.Add("\nBarnebilletter\nNavn\t\tRad\tPlass\tPris");
+
+            for (int i = 0; i < navnBarn.Length; i++)
+            {
+                Tuple<bool, int, int> getTup = SelgPlasser(1);
+
+                if (getTup.Item1)
+                {
+
+                    tilskuer[0, i] = navnBarn[i];
+
+                    Plass++;
+                    res.Add(navnBarn[i] + "\t" + getTup.Item2 + "\t" + getTup.Item3 + "\t" + BarnePris());
+                }
+                else
+                {
+                    res.Add("Ingen voksenbilletter tilgjengelig for " + navnBarn[i]);
+                    break;
+                }
+            }
+
+            return res;
         }
 
         public override double BarnePris()
